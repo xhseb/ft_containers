@@ -3,6 +3,7 @@
 
 # include <memory> //allocator
 # include "VectorIterator.hpp"
+#include "IteratorTraits.hpp"
 
 namespace ft
 {
