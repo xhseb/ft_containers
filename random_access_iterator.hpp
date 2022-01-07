@@ -6,7 +6,7 @@
 namespace ft
 {
     template <class T>
-    class random_access_iterator : public ft_iterator<random_access_iterator_tag, T>
+    class random_access_iterator : public iterator<random_access_iterator_tag, T>
     {
         public: //다른 클래스에서도 이 클래스 변수 받아서 typedef로 별칭을 정하기 때문에 public으로 넣음
         
@@ -49,15 +49,27 @@ namespace ft
                 this->ptr -= 1;
                 return (tmp);
             }
-            random_access_iterator& operator+ (difference_type n) //ptr + n 으로 해도 같은 값이 나온다
+            random_access_iterator operator+ (difference_type n)
             {
                 random_access_iterator tmp(*this);
-                return (tmp += n);
+                tmp.ptr += n;
+                return (tmp);
             }
-            random_access_iterator& operator- (difference_type n)
+            random_access_iterator& operator+= (difference_type n)
+            {
+                ptr += n;
+                return (*this);
+            }
+            random_access_iterator operator- (difference_type n)
             {
                 random_access_iterator tmp(*this);
-                return (tmp -= n);
+                tmp.ptr -= n;
+                return (tmp);
+            }
+            random_access_iterator& operator-= (difference_type n)
+            {
+                ptr -= n;
+                return (*this);
             }
             bool operator== (const random_access_iterator& rhs)
             {
@@ -96,13 +108,30 @@ namespace ft
                 return (false);
             }
             reference operator*() {return (*ptr);}
+            const reference operator*() const {return (*ptr);}
             pointer operator->() {return (ptr);}
             reference operator[](int n) {return (*(ptr + n));}
+            const reference operator[](int n) const {return (*(ptr + n));}
+
+            difference_type operator- (const random_access_iterator& rhs)
+            {
+                return (base() - rhs.base());
+            }
+            bool	operator ==	(const random_access_iterator& rhs) { return (base() == rhs.base()); }
+	        bool	operator !=	(const random_access_iterator& rhs) { return (base() != rhs.base()); }
+            bool	operator <	(const random_access_iterator& rhs) { return (base() < rhs.base()); }
+            bool	operator <=	(const random_access_iterator& rhs) { return (base() <= rhs.base()); }
+            bool	operator >	(const random_access_iterator& rhs) { return (base() > rhs.base()); }
+            bool	operator >=	(const random_access_iterator& rhs) { return (base() >= rhs.base()); }
 
         private:
-        
+
             pointer     ptr;
     };
+    template<typename T>
+	random_access_iterator<T>
+		operator +	(typename random_access_iterator<T>::difference_type n, const random_access_iterator<T>& iterator)
+		{ random_access_iterator<T> itr = iterator; return (itr + n); } //외부 함수로 만든 이유? : 이걸 안에 만들면 원래 lhs변수 포함 세개의 인자를 받으려고 함
 }
 
 
