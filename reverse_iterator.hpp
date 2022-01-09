@@ -128,12 +128,12 @@ namespace ft
             {
                 return (rhs.base() - current);
             }
-            bool	operator ==	(const reverse_iterator& rhs) { return (base() == rhs.base()); }
-	        bool	operator !=	(const reverse_iterator& rhs) { return (base() != rhs.base()); }
-            bool	operator <	(const reverse_iterator& rhs) { return (base() > rhs.base()); }
-            bool	operator <=	(const reverse_iterator& rhs) { return (base() >= rhs.base()); }
-            bool	operator >	(const reverse_iterator& rhs) { return (base() < rhs.base()); }
-            bool	operator >=	(const reverse_iterator& rhs) { return (base() <= rhs.base()); }
+            // bool	operator ==	(const reverse_iterator& rhs) { return (base() == rhs.base()); }
+	        // bool	operator !=	(const reverse_iterator& rhs) { return (base() != rhs.base()); }
+            // bool	operator <	(const reverse_iterator& rhs) { return (base() > rhs.base()); }
+            // bool	operator <=	(const reverse_iterator& rhs) { return (base() >= rhs.base()); }
+            // bool	operator >	(const reverse_iterator& rhs) { return (base() < rhs.base()); }
+            // bool	operator >=	(const reverse_iterator& rhs) { return (base() <= rhs.base()); }
 
 	};
 	template<typename T>

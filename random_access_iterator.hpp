@@ -117,12 +117,12 @@ namespace ft
             {
                 return (base() - rhs.base());
             }
-            bool	operator ==	(const random_access_iterator& rhs) { return (base() == rhs.base()); }
-	        bool	operator !=	(const random_access_iterator& rhs) { return (base() != rhs.base()); }
-            bool	operator <	(const random_access_iterator& rhs) { return (base() < rhs.base()); }
-            bool	operator <=	(const random_access_iterator& rhs) { return (base() <= rhs.base()); }
-            bool	operator >	(const random_access_iterator& rhs) { return (base() > rhs.base()); }
-            bool	operator >=	(const random_access_iterator& rhs) { return (base() >= rhs.base()); }
+            // bool	operator ==	(const random_access_iterator& rhs) { return (base() == rhs.base()); }
+	        // bool	operator !=	(const random_access_iterator& rhs) { return (base() != rhs.base()); }
+            // bool	operator <	(const random_access_iterator& rhs) { return (base() < rhs.base()); }
+            // bool	operator <=	(const random_access_iterator& rhs) { return (base() <= rhs.base()); }
+            // bool	operator >	(const random_access_iterator& rhs) { return (base() > rhs.base()); }
+            // bool	operator >=	(const random_access_iterator& rhs) { return (base() >= rhs.base()); }
 
         private:
 
