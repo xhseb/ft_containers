@@ -21,6 +21,8 @@ namespace ft
             random_access_iterator(pointer _ptr) : ptr(_ptr) {}
             virtual ~random_access_iterator() {}
 
+            random_access_iterator		base() const { return (ptr); }
+
             random_access_iterator &operator= (random_access_iterator const &src)
             {
                 if (this != &src)
