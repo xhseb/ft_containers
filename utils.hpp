@@ -1,6 +1,7 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
+#include "iterator.hpp"
 namespace ft
 {
     /* enable_if */
@@ -52,6 +53,21 @@ namespace ft
 
     template <>
     struct is_integral<unsigned long long int> {static const bool value = true;};
+
+    /* distance random iterator말고 다른 iterator가 들어왔을 때*/
+    template < typename InputIt >
+	typename ft::iterator_traits<InputIt>::difference_type	distance(InputIt first, InputIt last)
+	{
+		typename ft::iterator_traits<InputIt>::difference_type	dist = 0;
+		while (first != last)
+        {
+			++first;
+			++dist;
+		}
+		return dist;
+	}
 }
+
+
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef RANDOM_ACCESS_ITERATOR_HPP
 # define RANDOM_ACCESS_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "iterator.hpp"
 
 namespace ft
 {
@@ -21,7 +21,7 @@ namespace ft
             random_access_iterator(pointer _ptr) : ptr(_ptr) {}
             virtual ~random_access_iterator() {}
 
-            random_access_iterator		base() const { return (ptr); }
+            pointer		base() const { return (ptr); } //왜 pointer형으로 리턴해야하는지 random말고
 
             random_access_iterator &operator= (random_access_iterator const &src)
             {
@@ -126,6 +126,8 @@ namespace ft
             // bool	operator >	(const random_access_iterator& rhs) { return (base() > rhs.base()); }
             // bool	operator >=	(const random_access_iterator& rhs) { return (base() >= rhs.base()); }
 
+	operator random_access_iterator<const T> () const { return (random_access_iterator<const T>(this->ptr)); }
+    //왜인지 모르겠음
         private:
 
             pointer     ptr;
@@ -134,6 +136,13 @@ namespace ft
 	random_access_iterator<T>
 		operator +	(typename random_access_iterator<T>::difference_type n, const random_access_iterator<T>& iterator)
 		{ random_access_iterator<T> itr = iterator; return (itr + n); } //외부 함수로 만든 이유? : 이걸 안에 만들면 원래 lhs변수 포함 세개의 인자를 받으려고 함
+
+    template<typename iter>
+	typename ft::random_access_iterator<iter>::difference_type
+		operator -	(const random_access_iterator<iter>& lhs, const random_access_iterator<iter>& rhs) { return (lhs.base() - rhs.base()); }
+template<typename iter1, typename iter2>
+	typename ft::random_access_iterator<iter1>::difference_type
+		operator -	(const random_access_iterator<iter1>& lhs, const random_access_iterator<iter2>& rhs) { return (lhs.base() - rhs.base()); }
 }
 
 

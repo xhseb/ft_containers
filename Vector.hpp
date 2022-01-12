@@ -81,9 +81,9 @@ namespace ft
 
 			//Iterators
 			iterator begin() { return (_begin); }
-			const_iterator const begin() const { return (_begin); }
+			const_iterator begin() const { return (_begin); }
 			iterator end() { return (_end); }
-			const_iterator const end() const { return (_end); }
+			const_iterator end() const { return (_end); }
 			reverse_iterator rbegin() { return (reverse_iterator(_end)); }
 			const_reverse_iterator rbegin() const { return (reverse_iterator(_end)); }
 			reverse_iterator rend() { return (reverse_iterator(_begin)); }
@@ -94,14 +94,21 @@ namespace ft
 			size_type max_size() const { return (_alloc.max_size()); }
 			void resize (size_type n, value_type val = value_type()) 
 			{
-				if (size() < n)
+				size_type	range = ft::distance(_begin, _end);
+				size_t size = n - range;
+				if (capacity() < n)
 				{
-					if(capacity() * 2 < size() + n)
-						_alloc.reserve(size() + n);
-					else if (capacity() < size() + n)
-						_alloc.reserve(capacity() * 2);
-					for (int i = 0; i < n; i++)
+					if(n < capacity() * 2)
+						reserve(capacity() * 2);
+					else
+						reserve(n);
+					for (size_t i = 0; i < size; i++)
 						_alloc.construct(_end++, val);
+				}
+				else if (n < range)
+				{
+					_end = _begin + n;
+					_end_capa = _end;
 				}
 			}
 			size_type capacity() const { return (_end_capa - _begin); }
@@ -151,11 +158,11 @@ namespace ft
 			void assign (InputIterator first, InputIterator last, // range version
 				typename ft::enable_if<!is_integral<InputIterator>::value>::type* = 0)
 			{
-				size_t capa = capacity();
-				size_t range = last - first;
-				clear();
+				size_t capa = this->capacity();
+				size_type	range = ft::distance(first, last);
+				this->clear();
 				_alloc.deallocate(_begin, capacity());
-				if (capacity() < range)
+				if (capa < range)
 				{
 					_begin = _alloc.allocate(range);
 					_end_capa = _begin + range;
@@ -165,16 +172,16 @@ namespace ft
 					_begin = _alloc.allocate(capa);
 					_end_capa = _begin + capa;
 				}
-				for (int i = 0; first + i != last; i++)
-					_alloc.construct(_begin + i, *(first + i));
+				for (int i = 0; &*first + i != &*last; i++)
+					_alloc.construct(_begin + i, *(&*first + i));
 				_end = _begin + range;
 			}
 			void assign (size_type n, const value_type& val) // fill version
 			{
-				size_t capa = capacity();
-				clear();
-				_alloc.deallocate(_begin, capacity());
-				if (capacity() < n)
+				size_t capa = this->capacity();
+				this->clear();
+				_alloc.deallocate(_begin, capa);
+				if (capa < n)
 				{
 					_begin = _alloc.allocate(n);
 					_end_capa = _begin + n;
@@ -184,7 +191,7 @@ namespace ft
 					_begin = _alloc.allocate(capa);
 					_end_capa = _begin + capa;
 				}
-				for (int i = 0; i < n; i++)
+				for (size_t i = 0; i < n; i++)
 					_alloc.construct(_begin + i, val);
 				_end = _begin + n;
 			}
@@ -202,49 +209,84 @@ namespace ft
 			void pop_back()
 			{
 				if (!empty())
-					_alloc.destroy(_end--);
+					_alloc.destroy(_end - 1);
+				_end--;
 			}
 			// single element
 			iterator insert (iterator position, const value_type& val)
 			{
+
+				size_type	pos = &(*position) - _begin;
 				insert(position, 1, val);
-				return (position);
+				// return (iterator(position)); 왜 이렇게는 안될까..? 궁금 아 insert하면서 begin 주소가 바뀌기 때문인듯!!!!
+				return (iterator(_begin + pos));
 			}
 			// fill
     		void insert (iterator position, size_type n, const value_type& val)
 			{
-				if(capacity() * 2 < size() + n)
-					reserve(size() + n);
-				else if (capacity() < size() + n)
-					reserve(capacity() * 2);
-				for (int i = 0; i < n; i++)
-					_alloc.construct(_end + n - i, _end - i - 1);
-				for (int i = 0; i < n; n)
+				pointer n_end = _end;
+				pointer n_begin = _begin;
+				size_t capa = capacity();
+				size_t size = _end - _begin;
+				
+				if(capacity() * 2 < size + n)
 				{
-					if (position < _end)
-						_alloc.destroy(position);
-					_alloc.construct(position, val);
+					n_begin = _alloc.allocate(size + n);
+					_end_capa = n_begin + size + n;
+					n_end = n_begin;
 				}
+				else
+				{
+					n_begin = _alloc.allocate(capacity() * 2);
+					_end_capa = n_begin + capacity() * 2;
+					n_end = n_begin;
+				}
+				for (int i = 0; _begin + i < &*position; i++)
+					_alloc.construct(&*n_end++, *(_begin + i));
+				for (size_t i = 0; i < n; i++)
+					_alloc.construct(&*n_end++, val);
+				for (int i = 0; &*position + i < _end; i++)
+					_alloc.construct(&*n_end++, *(position + i));
+				for (int i = 0; _begin + i < _end; i++)
+					_alloc.destroy(_begin + i);
+				_alloc.deallocate(_begin, capa);
+				_begin = n_begin;
+				_end = n_end;
 			}
 			// range
 			template <class InputIterator>
     		void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!is_integral<InputIterator>::value>::type* = 0)
 			{
-				size_t n_size = last - first;
-				if(capacity() * 2 < size() + n_size)
-					reserve(size() + n_size);
-				else if (capacity() < size() + n_size)
-					reserve(capacity() * 2);
-				int i = 1;
-				while (n_size)
-					_alloc.construct(_end + n_size--, _end - i);
-				for (; first != last; first++, position++)
+				pointer n_end = _end;
+				pointer n_begin = _begin;
+				size_t capa = capacity();
+				size_t size = _end - _begin;
+				size_type	n_size = ft::distance(first, last);
+				//reserve는 새로운게 만들어지는게 아닌데...!!
+				if(capacity() * 2 < size + n_size)
 				{
-					if (position < _end)
-						_alloc.destroy(position);
-					_alloc.construct(position, *first);
+					n_begin = _alloc.allocate(size + n_size);
+					_end_capa = n_begin + size + n_size;
+					n_end = n_begin;
 				}
+				else
+				{
+					n_begin = _alloc.allocate(capacity() * 2);
+					_end_capa = n_begin + capacity() * 2;
+					n_end = n_begin;
+				}
+				for (int i = 0; _begin + i < &*position; i++)
+					_alloc.construct(&*n_end++, *(_begin + i));
+				for (int i = 0; &*first + i != &*last; i++)
+					_alloc.construct(&*n_end++, *(&*first + i));
+				for (int i = 0; &*position + i < _end; i++)
+					_alloc.construct(&*n_end++, *(position + i));
+				for (int i = 0; _begin + i < _end; i++)
+					_alloc.destroy(_begin + i);
+				_alloc.deallocate(_begin, capa);
+				_begin = n_begin;
+				_end = n_end;
 			}
 
 			iterator erase (iterator position)
@@ -253,15 +295,15 @@ namespace ft
 			}
 			iterator erase (iterator first, iterator last)
 			{
-				int i = 0;
-				iterator tmp = first;
-				for (; tmp != last; tmp++)
+				for (int i = 0; first + i != last; i++)
+					_alloc.destroy(&*first);
+				for (int i = 0; last + i != _end; i++)
 				{
-					_alloc.destroy(tmp);
-					if (last + i < _end)
-						_alloc.construct(tmp, last + i++);
+					_alloc.construct(&*first + i, *(last + i));
+					_alloc.destroy(&*last + i);
 				}
-				return (tmp + i);
+				_end -= &*last - &*first;
+				return (first);
 			}
 			void swap (vector& x)
 			{
@@ -310,6 +352,7 @@ namespace ft
 		}
 		return (true);
 	}
+
 template <class T, class Alloc>
 	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(lhs == rhs); }
 // template <class T, class Alloc>

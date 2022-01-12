@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
  #define TESTED_TYPE int
-
+ #define ft std
 void    printSize(ft::vector<int> vec)
 {
     std::cout << vec.size() << '\n';
@@ -10,6 +10,7 @@ void    printSize(ft::vector<int> vec)
     std::cout << vec.max_size() << '\n';
     for  (int i = 0; vec.begin() + i != vec.end(); i++)
         std::cout << *(vec.begin() + i) << '\n';
+    std::cout << "---------------------------"  << '\n';
 }
 
 int main()
@@ -18,7 +19,6 @@ int main()
      ft::vector<TESTED_TYPE> vct_two(4);     
      ft::vector<TESTED_TYPE> vct_three;
      ft::vector<TESTED_TYPE> vct_four;
- 
     for (unsigned long int i = 0; i < vct.size(); ++i)
          vct[i] = (vct.size() - i) * 3;
    for (unsigned long int i = 0; i < vct_two.size(); ++i)
@@ -30,7 +30,6 @@ int main()
    vct.assign(vct_two.begin(), vct_two.end());
     vct_two.assign(2, 42);
       vct_four.assign(4, 21);
- 
      std::cout << "\t### After assign(): ###" << std::endl;
  
       printSize(vct);
@@ -40,7 +39,6 @@ int main()
  
       vct_four.assign(6, 84);
       printSize(vct_four);
- 
       std::cout << "\t### assign() on enough capacity and low size: #    ##" << std::endl;
  
      vct.assign(5, 53);

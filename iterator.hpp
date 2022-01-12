@@ -1,5 +1,5 @@
-#ifndef ITERATOR_TRAITS_HPP
-# define ITERATOR_TRAITS_HPP
+#ifndef ITERATOR_HPP
+# define ITERATOR_HPP
 
 # include <cstddef> //ptrdiff_t 포인터의 차이를 위한 signed 타입
 
