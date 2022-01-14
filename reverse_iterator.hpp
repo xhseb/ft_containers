@@ -63,7 +63,7 @@ namespace ft
             reverse_iterator operator+ (difference_type n)
             {
                 reverse_iterator tmp(*this);
-                tmp.base() -= n;
+                tmp.current -= n;
                 return (tmp);
             }
             reverse_iterator& operator+= (difference_type n)
@@ -74,7 +74,7 @@ namespace ft
             reverse_iterator operator- (difference_type n)
             {
                 reverse_iterator tmp(*this);
-                tmp.base() += n;
+                tmp.current += n;
                 return (tmp);
             }
             reverse_iterator& operator-= (difference_type n)

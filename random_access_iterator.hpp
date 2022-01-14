@@ -2,7 +2,7 @@
 # define RANDOM_ACCESS_ITERATOR_HPP
 
 # include "iterator.hpp"
-
+#include <iostream>
 namespace ft
 {
     template <class T>
@@ -23,7 +23,7 @@ namespace ft
 
             pointer		base() const { return (ptr); } //왜 pointer형으로 리턴해야하는지 random말고
 
-            random_access_iterator &operator= (random_access_iterator const &src)
+            random_access_iterator &operator= (const random_access_iterator<const value_type> &src)
             {
                 if (this != &src)
                     this->ptr = src.ptr;
@@ -73,39 +73,39 @@ namespace ft
                 ptr -= n;
                 return (*this);
             }
-            bool operator== (const random_access_iterator& rhs)
+            bool operator== (const random_access_iterator<const value_type>& rhs) const //const 정리
             {
-                if (this->ptr == rhs.ptr)
+                if (this->ptr == rhs.base())
                     return (true);
                 return (false);
             }
-            bool operator!= (const random_access_iterator& rhs)
+            bool operator!= (const random_access_iterator<const value_type>& rhs) const
             {
-                if (this->ptr != rhs.ptr)
+                if (this->ptr != rhs.base())
                     return (true);
                 return (false);
             }
-            bool operator< (const random_access_iterator& rhs)
+            bool operator< (const random_access_iterator<const value_type>& rhs) const
             {
-                if (this->ptr < rhs.ptr)
+                if (this->ptr < rhs.base())
                     return (true);
                 return (false);
             }
-            bool operator> (const random_access_iterator& rhs)
+            bool operator> (const random_access_iterator<const value_type>& rhs) const
             {
-                if (this->ptr > rhs.ptr)
+                if (this->ptr > rhs.base())
                     return (true);
                 return (false);
             }
-            bool operator<= (const random_access_iterator& rhs)
+            bool operator<= (const random_access_iterator<const value_type>& rhs) const
             {
-                if (this->ptr <= rhs.ptr)
+                if (this->ptr <= rhs.base())
                     return (true);
                 return (false);
             }
-            bool operator>= (const random_access_iterator& rhs)
+            bool operator>= (const random_access_iterator<const value_type>& rhs) const
             {
-                if (this->ptr >= rhs.ptr)
+                if (this->ptr >= rhs.base())
                     return (true);
                 return (false);
             }
@@ -115,10 +115,10 @@ namespace ft
             reference operator[](int n) {return (*(ptr + n));}
             const reference operator[](int n) const {return (*(ptr + n));}
 
-            difference_type operator- (const random_access_iterator& rhs)
-            {
-                return (base() - rhs.base());
-            }
+            // difference_type operator- (const random_access_iterator& rhs)
+            // {
+            //     return (base() - rhs.base());
+            // }
             // bool	operator ==	(const random_access_iterator& rhs) { return (base() == rhs.base()); }
 	        // bool	operator !=	(const random_access_iterator& rhs) { return (base() != rhs.base()); }
             // bool	operator <	(const random_access_iterator& rhs) { return (base() < rhs.base()); }

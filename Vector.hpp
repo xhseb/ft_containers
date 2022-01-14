@@ -172,8 +172,8 @@ namespace ft
 					_begin = _alloc.allocate(capa);
 					_end_capa = _begin + capa;
 				}
-				for (int i = 0; &*first + i != &*last; i++)
-					_alloc.construct(_begin + i, *(&*first + i));
+				for (size_t i = 0; i < range; i++)
+					_alloc.construct(_begin + i, *(&*first++));
 				_end = _begin + range;
 			}
 			void assign (size_type n, const value_type& val) // fill version
@@ -264,7 +264,7 @@ namespace ft
 				size_t size = _end - _begin;
 				size_type	n_size = ft::distance(first, last);
 				//reserve는 새로운게 만들어지는게 아닌데...!!
-				if(capacity() * 2 < size + n_size)
+				if(capa * 2 < size + n_size)
 				{
 					n_begin = _alloc.allocate(size + n_size);
 					_end_capa = n_begin + size + n_size;
@@ -272,14 +272,14 @@ namespace ft
 				}
 				else
 				{
-					n_begin = _alloc.allocate(capacity() * 2);
-					_end_capa = n_begin + capacity() * 2;
+					n_begin = _alloc.allocate(capa * 2);
+					_end_capa = n_begin + capa * 2;
 					n_end = n_begin;
 				}
 				for (int i = 0; _begin + i < &*position; i++)
 					_alloc.construct(&*n_end++, *(_begin + i));
-				for (int i = 0; &*first + i != &*last; i++)
-					_alloc.construct(&*n_end++, *(&*first + i));
+				for (; &*first != &*last; first++)
+					_alloc.construct(&*n_end++, *(&*first));
 				for (int i = 0; &*position + i < _end; i++)
 					_alloc.construct(&*n_end++, *(position + i));
 				for (int i = 0; _begin + i < _end; i++)
@@ -336,42 +336,43 @@ namespace ft
 	};
 	//non-member function
 	template <class T, class Alloc>
-	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) //equal을 사용해봐야겠다
 	{
 		if (lhs.size() != rhs.size())
 			return false;
-		typename ft::vector<T>::const_iterator first1 = lhs.begin();
-		typename ft::vector<T>::const_iterator first2 = rhs.begin();
+		// typename ft::vector<T>::const_iterator first1 = lhs.begin();
+		// typename ft::vector<T>::const_iterator first2 = rhs.begin();
 
-		while (first1 != lhs.end())
+		// while (first1 != lhs.end())
+		// {
+		// 	if (*first1 != *first2)
+		// 		return false;
+		// 	first1++;
+		// 	first2++;
+		// }
+		// return (true);
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+
+	template <class T, class Alloc>
+		bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(lhs == rhs); }
+	template <class T, class Alloc>
+		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (*first1 != *first2)
-				return false;
-			first1++;
-			first2++;
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(),rhs.begin(), rhs.end());
 		}
-		return (true);
-	}
-
-template <class T, class Alloc>
-	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(lhs == rhs); }
-// template <class T, class Alloc>
-// 	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-// 	{
-// 		return ft::lexicographical_compare(lhs.begin(), lhs.end(),rhs.begin(), rhs.end());
-// 	}
-template <class T, class Alloc>
-	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(rhs < lhs); }
-template <class T, class Alloc>
-	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (rhs < lhs); }
-template <class T, class Alloc>
-	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(lhs < rhs); }
-
-template <class T, class Alloc>
-	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-	{
-		x.swap(y);
-	}
+	template <class T, class Alloc>
+		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(rhs < lhs); }
+	template <class T, class Alloc>
+		bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return (rhs < lhs); }
+	template <class T, class Alloc>
+		bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) { return !(lhs < rhs); }
+	//== 과 < 를 equal과 lexicographical_compare로 구현하여 나머지도 ==나 <를 사용한다
+	template <class T, class Alloc>
+		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+		{
+			x.swap(y);
+		}
 }
 
 
