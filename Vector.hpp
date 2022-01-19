@@ -2,10 +2,10 @@
 # define VECTOR_HPP
 
 # include <memory> //allocator
-#include "utils.hpp"
+# include "utils.hpp"
 # include "random_access_iterator.hpp"
 # include "reverse_iterator.hpp"
-#include <iostream>
+
 namespace ft
 {
 	template<typename T, typename Allocator = std::allocator<T> >
