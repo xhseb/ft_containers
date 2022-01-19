@@ -115,17 +115,6 @@ namespace ft
             reference operator[](int n) {return (*(ptr + n));}
             const reference operator[](int n) const {return (*(ptr + n));}
 
-            // difference_type operator- (const random_access_iterator& rhs)
-            // {
-            //     return (base() - rhs.base());
-            // }
-            // bool	operator ==	(const random_access_iterator& rhs) { return (base() == rhs.base()); }
-	        // bool	operator !=	(const random_access_iterator& rhs) { return (base() != rhs.base()); }
-            // bool	operator <	(const random_access_iterator& rhs) { return (base() < rhs.base()); }
-            // bool	operator <=	(const random_access_iterator& rhs) { return (base() <= rhs.base()); }
-            // bool	operator >	(const random_access_iterator& rhs) { return (base() > rhs.base()); }
-            // bool	operator >=	(const random_access_iterator& rhs) { return (base() >= rhs.base()); }
-
 	operator random_access_iterator<const T> () const { return (random_access_iterator<const T>(this->ptr)); }
     //왜인지 모르겠음
         private:
