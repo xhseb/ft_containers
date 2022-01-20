@@ -18,34 +18,50 @@ namespace ft
     protected:
         container_type c;
 
-    stack() : stack(Container()) { }
-    explicit stack( const Container& cont = Container() ); //컨테이너 기본 생성자 호출해 stack을 생성하거나 인자로 받아 stack을 생성
-    stack& operator=( const stack& other );
+    public:
+    //stack() : stack(Container()) { }
+    explicit stack( const Container& cont = Container() ) : c(cont) {} //컨테이너 기본 생성자 호출해 stack을 생성하거나 인자로 받아 stack을 생성
+    stack& operator=( const stack& other ) { c = other.c; return (*this); }
+    ~stack() {}
 
-    bool empty() const             // 원소가 없는가?
-    size_type size() const         // 원소의 개수
-    void push(const vluae_type& x) // 원소 추가
-    void pop()                     // 원소 제거
-    value_type& top()              // Top 원소의 참조
-    const value_type& top() const
+    // Element access
+    reference top() { return (c.back()); }
+    const_reference top() const { return (c.back()); }
+    // Capacity
+    bool empty() const { return (c.empty()); }
+    size_type size() const { return (c.size()); }
+    // Modifiers
+    void push( const value_type& value ) { c.push_back(value); }
+    void pop() { c.pop_back(); }
+
+    // relational operators
+    // Declaring friend function using friend keyword
+    template< class Tn, class Cntr >
+    friend bool operator==( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+    template< class Tn, class Cntr >
+    friend bool operator!=( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+    template< class Tn, class Cntr >
+    friend bool operator<( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+    template< class Tn, class Cntr >
+    friend bool operator<=( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+    template< class Tn, class Cntr >
+    friend bool operator>( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+    template< class Tn, class Cntr >
+    friend bool operator>=( const stack<Tn,Cntr>& lhs, const stack<Tn,Cntr>& rhs );
+
 };
-
 template< class T, class Container >
-bool operator==( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
-
+bool operator==( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c == rhs.c);}
 template< class T, class Container >
-bool operator!=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
-
+bool operator!=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c != rhs.c);}
 template< class T, class Container >
-bool operator<( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
-
+bool operator<( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c < rhs.c);}
 template< class T, class Container >
-bool operator<=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
-
+bool operator<=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c <= rhs.c);}
 template< class T, class Container >
-bool operator>( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
-
+bool operator>( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c > rhs.c);}
 template< class T, class Container >
-bool operator>=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs );
+bool operator>=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {return (lhs.c >= rhs.c);}
+}
 
 #endif  
