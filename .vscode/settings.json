@@ -70,6 +70,7 @@
         "list": "cpp",
         "map": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "set": "cpp"
     }
 }

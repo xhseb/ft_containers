@@ -2,7 +2,7 @@
 # define RANDOM_ACCESS_ITERATOR_HPP
 
 # include "iterator.hpp"
-#include <iostream>
+
 namespace ft
 {
     template <class T>
@@ -116,7 +116,7 @@ namespace ft
             const reference operator[](int n) const {return (*(ptr + n));}
 
 	operator random_access_iterator<const T> () const { return (random_access_iterator<const T>(this->ptr)); }
-    //왜인지 모르겠음
+    
         private:
 
             pointer     ptr;
