@@ -121,12 +121,10 @@ namespace ft
         public:
             typedef T1 first_type;
             typedef T2 second_type;
-        
-        private:
+
             T1 first;
             T2 second;
         
-        public:
             pair() : first(), second() {}
             pair( const T1& x, const T2& y ) : first(x), second(y) {}
             template< class U1, class U2 >
@@ -163,6 +161,12 @@ namespace ft
     bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
     { return !(lhs < rhs); }
 
+    enum Color
+    {
+        RED,
+        BLACK,
+        DBLACK
+    };
 }
 
 

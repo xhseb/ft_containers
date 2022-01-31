@@ -1,7 +1,7 @@
 #ifndef MAPITERATOR_HPP
 # define MAPITERATOR_HPP
 
-#include "Iterator.hpp"
+#include "iterator.hpp"
 #include "RBnode.hpp"
 
 

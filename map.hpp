@@ -21,8 +21,8 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			poiner;
 			typedef typename allocator_type::const_pointer		const_pointer;
-			typedef ft::tree_iterator<value_type>				iterator;
-			typedef ft::const_tree_iterator<value_type>			const_iterator; //const_tree_iterator와 tree_iterator<const> 차이????
+			typedef ft::map_iterator<value_type>				iterator;
+			typedef ft::const_map_iterator<value_type>			const_iterator; //const_tree_iterator와 tree_iterator<const> 차이????
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef std::ptrdiff_t								difference_type;   //typename 안해도되나??????????
