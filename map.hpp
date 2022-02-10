@@ -25,7 +25,7 @@ namespace ft
 			typedef ft::const_map_iterator<value_type>			const_iterator; //const_tree_iterator와 tree_iterator<const> 차이????
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-			typedef std::ptrdiff_t								difference_type;   //typename 안해도되나??????????
+			typedef std::ptrdiff_t								difference_type;
 			typedef std::size_t									size_type;
 			class value_compare : public std::binary_function<value_type, value_type, bool>
 			{

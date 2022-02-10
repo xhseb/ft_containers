@@ -74,7 +74,7 @@ namespace ft
                 return (*this);
             }
             difference_type		operator-(reverse_iterator	other)		{ return (other.current - current); }
-            reference operator[](int n) {return (*(current - n - 1));}
+            reference operator[](int n) {return (*(current - n - 1));} //지정된 상대 위치의 요소에 대한 참조를 반환
             const reference operator[](int n) const {return (*(current - n - 1));}
 			reference operator*() { iterator_type tmp = current; return *(--tmp); }
 			const reference operator*() const { iterator_type tmp = current; return *(--tmp); }

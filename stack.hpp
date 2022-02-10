@@ -19,7 +19,6 @@ namespace ft
         container_type c;
 
     public:
-    //stack() : stack(Container()) { }
     explicit stack( const Container& cont = Container() ) : c(cont) {} //컨테이너 기본 생성자 호출해 stack을 생성하거나 인자로 받아 stack을 생성
     stack& operator=( const stack& other ) { c = other.c; return (*this); }
     ~stack() {}

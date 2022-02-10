@@ -242,7 +242,7 @@ namespace ft
 					n_end = n_begin;
 				}
 				for (int i = 0; _begin + i < &*position; i++)
-					_alloc.construct(&*n_end++, *(_begin + i));
+					_alloc.construct(&*n_end++, *(_begin + i)); //position 전까지 복사
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(&*n_end++, val);
 				for (int i = 0; &*position + i < _end; i++)
