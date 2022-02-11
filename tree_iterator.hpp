@@ -1,7 +1,7 @@
 #ifndef TREEITERATOR_HPP
 # define TREEITERATOR_HPP
 
-# include "Iterator.hpp"
+# include "iterator.hpp"
 # include "RBnode.hpp"
 
 namespace ft

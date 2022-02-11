@@ -1,7 +1,7 @@
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 
-# include "iterator.hpp"
+# include "random_access_iterator.hpp"
 
 namespace ft
 {
@@ -31,24 +31,24 @@ namespace ft
 			/* reverse_iterator */
             reverse_iterator& operator++ ()
             {
-                current -= 1;
+                current--;
                 return (*this);
             }
             reverse_iterator operator++ (int)
             {
                 reverse_iterator tmp(*this);
-                current -= 1;
+                current--;
                 return (tmp);
             }
             reverse_iterator& operator-- ()
             {
-                current += 1;
+                current++;
                 return (*this);
             }
             reverse_iterator operator-- (int)
             {
                 reverse_iterator tmp(*this);
-                current += 1;
+                current++;
                 return (tmp);
             }
             reverse_iterator operator+ (difference_type n) const

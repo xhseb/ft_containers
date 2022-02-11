@@ -2,9 +2,8 @@
 # define MAP_HPP
 
 # include "RBTree.hpp"
-# include <iostream>
 # include <memory>
-# include <functional>
+# include <functional> //less
 
 namespace ft
 {
@@ -21,12 +20,13 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			poiner;
 			typedef typename allocator_type::const_pointer		const_pointer;
-			typedef ft::map_iterator<value_type>				iterator;
-			typedef ft::const_map_iterator<value_type>			const_iterator; //const_tree_iterator와 tree_iterator<const> 차이????
+			typedef ft::tree_iterator<value_type>				iterator;
+			typedef ft::const_tree_iterator<value_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef std::ptrdiff_t								difference_type;
 			typedef std::size_t									size_type;
+
 			class value_compare : public std::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
@@ -42,10 +42,8 @@ namespace ft
 						return comp(x.first, y.first);
 					}
 			};
-
 		private:
 			typedef RBTree<value_type, value_compare, allocator_type> tree_type;
-
 			tree_type           _tree;
 
 		public:

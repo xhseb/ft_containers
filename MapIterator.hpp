@@ -238,7 +238,7 @@ namespace ft
 				return (_node->value);
 			}
 
-			pointer operator->() const //return 시, const 형을 반환
+			pointer operator->() const
 			{
 				return (&(_node->value));
 			}
@@ -255,7 +255,7 @@ namespace ft
 
 			bool operator== (const map_iterator<T>& lhs)
 			{
-				return (this->_node == lhs.getnode());   //base로 받아오는 값이 _node랑 같은데 굳이 base 써야하나????
+				return (this->_node == lhs.getnode());
 			}
 
 			bool operator!= (const map_iterator<T>& lhs)
