@@ -302,7 +302,7 @@ namespace ft
 				}
 				return (ft::make_pair(iterator(node), true));
 			}
-			
+
 			pair<iterator, bool> insertValue(const value_type &val)
 			{
 				node_pointer node =	_node_alloc.allocate(1);
@@ -379,7 +379,7 @@ namespace ft
 				node_pointer rightChild;
 
 				rightChild = node->right; //부모의 오른쪽 자식
-				if (rightChild == NULL) // ????
+				if (rightChild == NULL)
 					return ;
 				node->right = rightChild->left;
 				if (node->right != NULL)

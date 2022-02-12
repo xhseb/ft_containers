@@ -93,7 +93,7 @@ namespace ft
 			iterator				upper_bound (const value_type& val) { return (iterator(_tree.upper_bound(val))); }
 			const_iterator			lower_bound (const value_type& val) const {	return (const_iterator(_tree.lower_bound(val))); }
 			const_iterator			upper_bound (const value_type& val) const {	return (const_iterator(_tree.upper_bound(val))); }
-			
+
 			pair<iterator, iterator> equal_range (const value_type& val)
 			{ return (ft::make_pair(this->lower_bound(val), this->upper_bound(val))); }
 			pair<const_iterator,const_iterator> equal_range( const value_type& val) const
@@ -102,44 +102,43 @@ namespace ft
 			allocator_type get_allocator() const
 			{ return (allocator_type()); }
 
-			friend bool operator==( const ft::set<T,Compare,Alloc>& lhs,
-				const ft::set<T,Compare,Alloc>& rhs )
+			template < class _T, class _Compare, class _Alloc >
+			friend bool operator==( const ft::set<_T,_Compare,_Alloc>& lhs, const ft::set<_T,_Compare,_Alloc>& rhs );
+			template < class _T, class _Compare, class _Alloc >
+			friend bool operator<( const ft::set<_T,_Compare,_Alloc>& lhs, const ft::set<_T,_Compare,_Alloc>& rhs );
+	};
+			template < class T, class Compare, class Alloc >
+			bool operator==( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				if (lhs.size() != rhs.size())
 					return (false);
 				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 			}
-
-			friend bool operator!=( const ft::set<T,Compare,Alloc>& lhs,
-				const ft::set<T,Compare,Alloc>& rhs )
+			template < class T, class Compare, class Alloc >
+			bool operator!=( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				return (!(lhs == rhs));
 			}
-
-			friend bool operator<( const ft::set<T,Compare,Alloc>& lhs,
-							const ft::set<T,Compare,Alloc>& rhs )
+			template < class T, class Compare, class Alloc >
+			bool operator<( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 			}
-
-			friend bool operator<=( const ft::set<T,Compare,Alloc>& lhs,
-							const ft::set<T,Compare,Alloc>& rhs )
+			template < class T, class Compare, class Alloc >
+			bool operator<=( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				return(!(rhs < lhs));
 			}
-
-			friend bool operator>( const ft::set<T,Compare,Alloc>& lhs,
-							const ft::set<T,Compare,Alloc>& rhs )
+			template < class T, class Compare, class Alloc >
+			bool operator>( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				return (rhs < lhs);
 			}
-
-			friend bool operator>=( const ft::set<T,Compare,Alloc>& lhs,
-							const ft::set<T,Compare,Alloc>& rhs )
+			template < class T, class Compare, class Alloc >
+			bool operator>=( const ft::set<T,Compare,Alloc>& lhs, const ft::set<T,Compare,Alloc>& rhs )
 			{
 				return (!(lhs < rhs));
 			}
-	};
 
 }
 
